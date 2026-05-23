@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
   analyzePatterns,
+  analyzeSoulSpirit,
   buildAnalysisPrompt,
   calcBazi,
   elementOfBranch,
@@ -252,6 +253,7 @@ function ResultView({
 
       <PatternView result={result} />
       <EnergyView result={result} />
+      <SoulSpiritView result={result} />
       <AiAnalysisView result={result} input={input} runId={runId} />
     </>
   );
@@ -337,6 +339,58 @@ function EnergyView({ result }: { result: BaziResult }) {
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+function SoulSpiritView({ result }: { result: BaziResult }) {
+  const { souls, spirits } = analyzeSoulSpirit(result);
+
+  const barColor = (level: number) =>
+    level >= 4 ? "#6b8e5e" : level >= 3 ? "var(--accent)" : level >= 2 ? "#c9a96e" : "#a89080";
+
+  const renderItem = (item: { name: string; alias: string; meaning: string; level: number; desc: string }) => (
+    <div key={item.name} style={{ marginBottom: 12 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+        <span style={{ fontSize: 14, fontWeight: 600 }}>
+          {item.name}
+          <span style={{ fontWeight: 400, color: "var(--sub)", marginLeft: 6, fontSize: 12 }}>
+            {item.alias}
+          </span>
+        </span>
+        <span style={{ fontSize: 12, color: "var(--sub)" }}>{item.level}/5</span>
+      </div>
+      <div style={{ height: 6, background: "#f1e7d2", borderRadius: 3, overflow: "hidden", marginBottom: 4 }}>
+        <div
+          style={{
+            width: `${(item.level / 5) * 100}%`,
+            height: "100%",
+            background: barColor(item.level),
+            borderRadius: 3,
+            transition: "width 0.3s",
+          }}
+        />
+      </div>
+      <div style={{ fontSize: 12, color: "var(--sub)", lineHeight: 1.6 }}>{item.desc}</div>
+    </div>
+  );
+
+  return (
+    <div className="card">
+      <h2>三魂七魄</h2>
+      <p className="tip" style={{ marginBottom: 14 }}>
+        根据五行偏枯与十神能量推算精神（三魂）和身体（七魄）的状态。
+      </p>
+      <div className="soul-spirit-grid">
+        <div>
+          <h3 style={{ fontSize: 14, marginBottom: 10, color: "var(--primary)" }}>三魂（精神）</h3>
+          {souls.map(renderItem)}
+        </div>
+        <div>
+          <h3 style={{ fontSize: 14, marginBottom: 10, color: "var(--primary)" }}>七魄（身体）</h3>
+          {spirits.map(renderItem)}
+        </div>
+      </div>
     </div>
   );
 }

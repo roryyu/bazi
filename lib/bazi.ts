@@ -509,6 +509,237 @@ export function summarizeTenGodEnergy(result: BaziResult): {
 }
 
 // ===========================================================================
+// 三魂七魄推算（基于五行偏枯 + 十神能量）
+// ===========================================================================
+
+export type SoulSpiritItem = {
+  name: string; // 如 "胎光"
+  alias: string; // 如 "生命力"
+  meaning: string; // 如 "天魂，主生命活力"
+  level: number; // 0-5 档
+  desc: string; // 简短描述
+};
+
+export type SoulSpiritResult = {
+  souls: SoulSpiritItem[];
+  spirits: SoulSpiritItem[];
+};
+
+/**
+ * 统计命局中五行能量分布
+ * 天干计 2 分，地支藏干按主气 1.5 / 中气 1 / 余气 0.5 计
+ */
+function countElementEnergy(result: BaziResult): Record<string, number> {
+  const energy: Record<string, number> = { 木: 0, 火: 0, 土: 0, 金: 0, 水: 0 };
+
+  // 四柱天干（排除日主单独算）
+  const allStems = [
+    result.year.stem,
+    result.month.stem,
+    result.day.stem,
+    result.hour.stem,
+  ];
+  for (const s of allStems) {
+    energy[elementOfStem(s)] += 2;
+  }
+
+  // 四柱地支藏干（主气 1.5, 中气 1, 余气 0.5）
+  const allBranches = [
+    result.year.branch,
+    result.month.branch,
+    result.day.branch,
+    result.hour.branch,
+  ];
+  for (const b of allBranches) {
+    const hidden = HIDDEN_STEMS[b] || [];
+    hidden.forEach((stem, idx) => {
+      const w = idx === 0 ? 1.5 : idx === 1 ? 1 : 0.5;
+      energy[elementOfStem(stem)] += w;
+    });
+  }
+
+  return energy;
+}
+
+/** 将原始分数映射到 0-5 的等级 */
+function toLevel(score: number, max: number): number {
+  if (max <= 0) return 0;
+  const ratio = score / max;
+  if (ratio >= 0.8) return 5;
+  if (ratio >= 0.6) return 4;
+  if (ratio >= 0.4) return 3;
+  if (ratio >= 0.25) return 2;
+  if (ratio > 0) return 1;
+  return 0;
+}
+
+const LEVEL_LABELS = ["极弱", "偏弱", "中弱", "中等", "偏强", "充盈"] as const;
+
+function soulDesc(name: string, level: number): string {
+  const tag = LEVEL_LABELS[level];
+  const descs: Record<string, string[]> = {
+    胎光: [
+      "生命力极度匮乏，元气大伤，宜静养培本",
+      "生命力偏弱，精力不足，宜补印养身",
+      "生命力稍弱，自愈力一般，需注意休养",
+      "生命力中等，身体根基尚可",
+      "生命力充沛，精力旺盛，自愈力强",
+      "生命力极强，元气充盈，如日中天",
+    ],
+    爽灵: [
+      "思维迟钝，创造力匮乏，宜多学善思",
+      "智识偏弱，逻辑表达受限",
+      "思辨力中下，需刻意训练思维",
+      "智慧中等，学习能力正常",
+      "才思敏捷，表达力与创造力俱佳",
+      "爽灵大开，天赋异禀，才华横溢",
+    ],
+    幽精: [
+      "情感淡漠，欲望极低，需打开感受力",
+      "情执偏弱，对外界少主动",
+      "情感内敛，不易外露",
+      "情感中等，执念与放下之间尚平衡",
+      "情执较重，内心丰富，易动情",
+      "幽精深厚，情感强烈，执念极深",
+    ],
+  };
+  return `${name}${tag}：${descs[name]?.[level] || ""}`;
+}
+
+function spiritDesc(name: string, level: number): string {
+  const tag = LEVEL_LABELS[level];
+  const descs: Record<string, string[]> = {
+    尸狗: [
+      "神经系统极弱，警觉力近无，易失眠恍惚",
+      "警觉力偏弱，神经敏感易疲",
+      "神经系统稍弱，反应一般",
+      "神经系统中等，睡眠与警觉平衡",
+      "警觉力强，反应灵敏",
+      "神经系统极旺，感知敏锐如电",
+    ],
+    伏矢: [
+      "消化系统极弱，脾胃寒凉，食欲不振",
+      "消化偏弱，易腹胀便溏",
+      "脾胃功能稍弱，需注意饮食",
+      "消化功能中等，运化正常",
+      "脾胃健运，消化吸收良好",
+      "消化系统极旺，胃口极佳",
+    ],
+    雀阴: [
+      "生殖系统极弱，肾气不足",
+      "生殖机能偏弱，精力略亏",
+      "肾气稍弱，需节欲养精",
+      "生殖系统中等，肾水尚充",
+      "肾精充沛，生殖力旺",
+      "肾水极旺，精力充沛异常",
+    ],
+    吞贼: [
+      "免疫力极低，易反复感染",
+      "免疫力偏弱，卫气不固",
+      "免疫功能稍弱，换季易感",
+      "免疫功能中等，抗病力正常",
+      "免疫力强，卫气充盈",
+      "免疫系统极旺，百病不侵",
+    ],
+    非毒: [
+      "内分泌失调严重，肝气郁结",
+      "内分泌偏弱，解毒力不足",
+      "肝胆疏泄稍弱，易情绪波动",
+      "内分泌中等，肝气调达尚可",
+      "肝气舒畅，内分泌平衡",
+      "解毒系统极旺，肝胆疏泄有力",
+    ],
+    除秽: [
+      "代谢极缓，废物淤积，身体沉重",
+      "代谢偏弱，排泄不畅",
+      "代谢功能稍弱，需助运化",
+      "代谢功能中等，排泄正常",
+      "代谢旺盛，身体清爽",
+      "代谢系统极强，排毒迅速",
+    ],
+    臭肺: [
+      "呼吸系统极弱，气短乏力",
+      "肺气偏弱，呼吸浅促",
+      "肺功能稍弱，易感咳喘",
+      "呼吸系统中等，气息平稳",
+      "肺气充盈，呼吸深长",
+      "呼吸系统极旺，纳气有力",
+    ],
+  };
+  return `${name}${tag}：${descs[name]?.[level] || ""}`;
+}
+
+/**
+ * 从八字推算三魂七魄状态
+ */
+export function analyzeSoulSpirit(result: BaziResult): SoulSpiritResult {
+  const tenGodEnergy = summarizeTenGodEnergy(result);
+  const elemEnergy = countElementEnergy(result);
+
+  // 十神能量 map：印星/比劫/食伤/财星/官杀
+  const godMap: Record<string, number> = {};
+  for (const g of tenGodEnergy) {
+    godMap[g.category] = g.weight;
+  }
+  const yinW = godMap["印星（土生金）"] || 0;
+  const bijieW = godMap["比劫（同我）"] || 0;
+  const shishangW = godMap["食伤（我生）"] || 0;
+  const caiW = godMap["财星（我克）"] || 0;
+  // const guanshaW = godMap["官杀（克我）"] || 0; // 暂未使用
+
+  // 十神总权重上限（用于映射 level）
+  const maxGodW = Math.max(1, yinW, bijieW, shishangW, caiW);
+
+  // --- 三魂 ---
+  // 胎光：日主旺衰（印 + 比劫的支撑）
+  const taiGuangScore = yinW + bijieW;
+  const taiGuangMax = maxGodW * 2; // 两类加和的合理上限
+  const taiGuangLevel = toLevel(taiGuangScore, taiGuangMax);
+
+  // 爽灵：食伤能量
+  const shuangLingLevel = toLevel(shishangW, maxGodW);
+
+  // 幽精：财星 + 比劫
+  const youJingScore = caiW + bijieW * 0.5;
+  const youJingLevel = toLevel(youJingScore, maxGodW * 1.5);
+
+  // --- 七魄 ---
+  const maxElem = Math.max(1, ...Object.values(elemEnergy));
+
+  // 尸狗（神经）：火 + 水
+  const shiGouLevel = toLevel((elemEnergy["火"] + elemEnergy["水"]) / 2, maxElem * 0.6);
+  // 伏矢（消化）：土
+  const fuShiLevel = toLevel(elemEnergy["土"], maxElem);
+  // 雀阴（生殖）：水
+  const queYinLevel = toLevel(elemEnergy["水"], maxElem);
+  // 吞贼（免疫）：金
+  const tunZeiLevel = toLevel(elemEnergy["金"], maxElem);
+  // 非毒（内分泌）：木
+  const feiDuLevel = toLevel(elemEnergy["木"], maxElem);
+  // 除秽（代谢）：土 + 水
+  const chuHuiLevel = toLevel((elemEnergy["土"] + elemEnergy["水"]) / 2, maxElem * 0.6);
+  // 臭肺（呼吸）：金
+  const chouFeiLevel = toLevel(elemEnergy["金"], maxElem);
+
+  return {
+    souls: [
+      { name: "胎光", alias: "生命力", meaning: "天魂，主生命活力与自愈力", level: taiGuangLevel, desc: soulDesc("胎光", taiGuangLevel) },
+      { name: "爽灵", alias: "智慧", meaning: "地魂，主思维智力与创造", level: shuangLingLevel, desc: soulDesc("爽灵", shuangLingLevel) },
+      { name: "幽精", alias: "情感", meaning: "人魂，主情感欲望与执念", level: youJingLevel, desc: soulDesc("幽精", youJingLevel) },
+    ],
+    spirits: [
+      { name: "尸狗", alias: "神经", meaning: "警觉与防御系统", level: shiGouLevel, desc: spiritDesc("尸狗", shiGouLevel) },
+      { name: "伏矢", alias: "消化", meaning: "消化与排泄系统", level: fuShiLevel, desc: spiritDesc("伏矢", fuShiLevel) },
+      { name: "雀阴", alias: "生殖", meaning: "生殖系统", level: queYinLevel, desc: spiritDesc("雀阴", queYinLevel) },
+      { name: "吞贼", alias: "免疫", meaning: "免疫防御系统", level: tunZeiLevel, desc: spiritDesc("吞贼", tunZeiLevel) },
+      { name: "非毒", alias: "内分泌", meaning: "内分泌与解毒系统", level: feiDuLevel, desc: spiritDesc("非毒", feiDuLevel) },
+      { name: "除秽", alias: "代谢", meaning: "新陈代谢系统", level: chuHuiLevel, desc: spiritDesc("除秽", chuHuiLevel) },
+      { name: "臭肺", alias: "呼吸", meaning: "呼吸系统", level: chouFeiLevel, desc: spiritDesc("臭肺", chouFeiLevel) },
+    ],
+  };
+}
+
+// ===========================================================================
 // 构建送给大模型的提示词
 // ===========================================================================
 
@@ -577,6 +808,19 @@ export function buildAnalysisPrompt(
   }
   lines.push("");
 
+  // 三魂七魄推算
+  const soulSpirit = analyzeSoulSpirit(result);
+  lines.push("【三魂七魄状态推算】");
+  lines.push("三魂（精神层面）：");
+  for (const s of soulSpirit.souls) {
+    lines.push(`- ${s.name}（${s.alias}）：等级 ${s.level}/5 — ${s.desc}`);
+  }
+  lines.push("七魄（身体层面）：");
+  for (const sp of soulSpirit.spirits) {
+    lines.push(`- ${sp.name}（${sp.alias}）：等级 ${sp.level}/5 — ${sp.desc}`);
+  }
+  lines.push("");
+
   lines.push("请基于以上排盘信息输出一份系统的命理分析，要求：");
   lines.push("1．《命局总评》：判断日主强弱、五行起伏、核心格局。");
   lines.push("2．《性格与天赋》：从日主及透干十神看个性、思维、才华。");
@@ -584,6 +828,7 @@ export function buildAnalysisPrompt(
   lines.push("4．《感情婚姻》：从财星/官杀看感情倾向。");
   lines.push("5．《健康提示》：从五行偏枯看需注意的部位。");
   lines.push("6．《当下建议》：结合格局给出可操作的人生建议。");
+  lines.push("7．《三魂七魄解读》：结合上述三魂七魄状态，从生命力、智慧、情感三魂和七大身体系统的角度给出养护建议。");
   lines.push("");
   lines.push("要求输出使用中文 Markdown 格式，段落清晰；");
 

@@ -211,6 +211,14 @@ body {
   .form-row { grid-template-columns: repeat(2, 1fr); }
   .bazi-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
   .bazi-col .gz { font-size: 22px; }
+  .soul-spirit-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== 三魂七魄两栏布局 ===== */
+.soul-spirit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
 }
 
 /* ===== Markdown 渲染样式（AI 命理分析） ===== */
