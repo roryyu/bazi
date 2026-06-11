@@ -1,0 +1,198 @@
+"use client";
+
+import { motion } from "framer-motion";
+import {
+  Brain,
+  ExternalLink,
+  Rss,
+  Search,
+  BarChart3,
+  Cpu,
+  FileText,
+  Palette,
+  Database,
+  Mic,
+  Radio,
+  Sparkles,
+} from "lucide-react";
+
+const projects = [
+  {
+    title: "EduDream - AI教育产品",
+    role: "独立开发",
+    link: "https://www.edudream.cn",
+    description:
+      "基于 deepseek 和 doubao-embedding-text 的中小学教师课程论文 Agent，3周完成初版开发，上线2周获150+位付费用户。",
+    tags: ["DeepSeek", "AI Agent", "Prompt Engineering", "用户增长"],
+    highlight: true,
+  },
+];
+
+const skills = [
+  { name: "china-rss-feed", desc: "中文RSS订阅聚合", url: "https://clawhub.ai/roryyu/china-rss-feed", icon: Rss },
+  { name: "websearch-free-skill", desc: "免费Web搜索能力", url: "https://clawhub.ai/roryyu/websearch-free-skill", icon: Search },
+  { name: "sre-log-analytics", desc: "SRE日志智能分析", url: "https://clawhub.ai/roryyu/sre-log-analytics", icon: BarChart3 },
+  { name: "self-distill", desc: "自蒸馏能力", url: "https://skillhub.cn/skills/self-distill", icon: Cpu },
+  { name: "create-index", desc: "wiki llm索引自动生成", url: "https://skillhub.cn/skills/create-index", icon: FileText },
+  { name: "text-art", desc: "文本艺术生成", url: "https://skillhub.cn/skills/text-art", icon: Palette },
+  { name: "forget-something", desc: "记忆管理插件", url: "https://clawhub.ai/roryyu/forget-something", icon: Database },
+];
+
+const community = [
+  { text: "参与多个AI线下社群技术分享，米柚club等自媒体技术讲师", icon: Sparkles },
+  { text: "录制AI Agent主题播客", link: "https://www.xiaoyuzhoufm.com/episode/69bb9bea3c625cc5ae183509", icon: Mic },
+  { text: "AI主题技术直播回放", link: "https://weixin.qq.com/sph/AZCqIJrdtZ", icon: Radio },
+];
+
+export default function AIProjects() {
+  return (
+    <section id="ai-projects" className="py-24 bg-surface">
+      <div className="max-w-6xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/5 border border-accent/10 text-accent text-sm font-medium mb-4">
+            <Brain size={16} />
+            AI & 开源
+          </div>
+          <h2 className="text-4xl font-bold text-foreground">AI项目与开源贡献</h2>
+          <p className="text-muted mt-3 max-w-2xl mx-auto">
+            专注于AI Agent应用开发，独立开发AI教育产品，并积极贡献开源社区
+          </p>
+        </motion.div>
+
+        <div className="space-y-16">
+          {projects.map((project, i) => (
+            <motion.div
+              key={project.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5 }}
+              className="relative"
+            >
+              <div className="p-8 rounded-3xl bg-white border border-border shadow-sm hover:shadow-lg transition-shadow">
+                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-2xl font-bold text-foreground">{project.title}</h3>
+                      <span className="px-3 py-0.5 rounded-full bg-primary/5 text-primary text-xs font-medium border border-primary/10">
+                        {project.role}
+                      </span>
+                    </div>
+                    <p className="text-muted leading-relaxed max-w-3xl">{project.description}</p>
+                  </div>
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary to-accent text-white text-sm font-medium hover:shadow-lg hover:shadow-primary/20 transition-shadow"
+                  >
+                    访问产品
+                    <ExternalLink size={14} />
+                  </a>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 rounded-full bg-surface-alt text-muted text-sm"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+
+          <div>
+            <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+              <Sparkles size={20} className="text-accent" />
+              Skills 开发
+            </h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {skills.map((skill, i) => {
+                const Icon = skill.icon;
+                return (
+                  <motion.a
+                    key={skill.name}
+                    href={skill.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.4, delay: i * 0.05 }}
+                    className="group p-5 rounded-2xl bg-white border border-border hover:border-primary/20 hover:shadow-md transition-all"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-lg bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                        <Icon size={18} />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-mono text-sm font-semibold text-foreground group-hover:text-primary transition-colors truncate">
+                          {skill.name}
+                        </div>
+                        <div className="text-sm text-muted mt-0.5">{skill.desc}</div>
+                      </div>
+                    </div>
+                  </motion.a>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
+              <Radio size={20} className="text-accent" />
+              AI技术社区影响力
+            </h3>
+            <div className="grid sm:grid-cols-3 gap-4">
+              {community.map((item, i) => {
+                const Icon = item.icon;
+                const content = (
+                  <div className="p-5 rounded-2xl bg-white border border-border hover:shadow-md transition-shadow h-full">
+                    <div className="p-2 rounded-lg bg-accent/5 text-accent w-fit mb-3">
+                      <Icon size={18} />
+                    </div>
+                    <p className="text-sm text-muted leading-relaxed">{item.text}</p>
+                  </div>
+                );
+                return item.link ? (
+                  <motion.a
+                    key={i}
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.1 }}
+                    className="block hover:border-primary/20"
+                  >
+                    {content}
+                  </motion.a>
+                ) : (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.1 }}
+                  >
+                    {content}
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,3 +1,19 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #ffffff;
+  --color-foreground: #1e293b;
+  --color-primary: #2563eb;
+  --color-primary-light: #3b82f6;
+  --color-accent: #6366f1;
+  --color-accent-light: #818cf8;
+  --color-surface: #f8fafc;
+  --color-surface-alt: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-muted: #64748b;
+  --color-success: #10b981;
+}
+
 :root {
   --bg: #f6f1e8;
   --card: #ffffff;
@@ -312,5 +328,15 @@ body {
 .md-body a {
   color: var(--el-shui);
   text-decoration: underline;
+}
+
+/* Resume page global styles */
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: #2563eb20;
+  color: #2563eb;
 }
 
