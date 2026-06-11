@@ -1,0 +1,315 @@
+:root {
+  --bg: #f6f1e8;
+  --card: #ffffff;
+  --text: #2a2418;
+  --sub: #7a6f5b;
+  --line: #e6dcc6;
+  --primary: #8b3a2a;
+  --accent: #c08a4a;
+
+  /* 五行配色 */
+  --el-mu: #2f7a3a;
+  --el-huo: #c0392b;
+  --el-tu: #b07a2c;
+  --el-jin: #8a8a8a;
+  --el-shui: #2c5fa5;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei",
+    "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.header h1 {
+  font-size: 28px;
+  letter-spacing: 4px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.header p {
+  color: var(--sub);
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 22px;
+  box-shadow: 0 2px 8px rgba(60, 40, 10, 0.04);
+  margin-bottom: 22px;
+}
+
+.card h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 14px;
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  color: var(--sub);
+  margin-bottom: 4px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+  color: var(--text);
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.btn {
+  display: inline-block;
+  padding: 9px 22px;
+  background: var(--primary);
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+
+.btn:hover {
+  background: #6f2c1f;
+}
+
+.bazi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  text-align: center;
+}
+
+.bazi-col {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 8px;
+  background: #fdfaf2;
+}
+
+.bazi-col .col-title {
+  font-size: 12px;
+  color: var(--sub);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.bazi-col .god {
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 4px;
+  min-height: 1em;
+}
+
+.bazi-col .gz {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin: 4px 0;
+}
+
+.bazi-col .hidden {
+  font-size: 11px;
+  color: var(--sub);
+  margin-top: 6px;
+  border-top: 1px dashed var(--line);
+  padding-top: 6px;
+  line-height: 1.5;
+}
+
+.day-master {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--sub);
+}
+
+.day-master strong {
+  color: var(--primary);
+  font-size: 15px;
+  margin: 0 4px;
+}
+
+/* 五行配色 */
+.el-木 { color: var(--el-mu); }
+.el-火 { color: var(--el-huo); }
+.el-土 { color: var(--el-tu); }
+.el-金 { color: var(--el-jin); }
+.el-水 { color: var(--el-shui); }
+
+.tag {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: #f1e7d2;
+  color: var(--primary);
+  font-size: 11px;
+  margin-right: 4px;
+}
+
+.tip {
+  font-size: 12px;
+  color: var(--sub);
+  line-height: 1.7;
+}
+
+.tip code {
+  background: #f1e7d2;
+  padding: 1px 4px;
+  border-radius: 3px;
+  color: var(--primary);
+}
+
+@media (max-width: 640px) {
+  .form-row { grid-template-columns: repeat(2, 1fr); }
+  .bazi-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .bazi-col .gz { font-size: 22px; }
+  .soul-spirit-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== 三魂七魄两栏布局 ===== */
+.soul-spirit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* ===== Markdown 渲染样式（AI 命理分析） ===== */
+.md-body > :first-child { margin-top: 0; }
+.md-body > :last-child { margin-bottom: 0; }
+
+.md-body h1,
+.md-body h2,
+.md-body h3,
+.md-body h4 {
+  color: var(--primary);
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 18px 0 8px;
+}
+.md-body h1 { font-size: 18px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.md-body h2 { font-size: 16px; border-left: 3px solid var(--accent); padding-left: 8px; }
+.md-body h3 { font-size: 15px; color: var(--accent); }
+.md-body h4 { font-size: 14px; color: var(--sub); }
+
+.md-body p { margin: 8px 0; }
+
+.md-body strong { color: var(--primary); }
+.md-body em { color: var(--accent); font-style: normal; }
+
+.md-body ul,
+.md-body ol {
+  margin: 8px 0 8px 22px;
+  padding-left: 4px;
+}
+.md-body li { margin: 4px 0; }
+.md-body li > p { margin: 2px 0; }
+
+.md-body blockquote {
+  margin: 10px 0;
+  padding: 6px 12px;
+  border-left: 3px solid var(--accent);
+  background: #f8f0dc;
+  color: var(--sub);
+  border-radius: 0 4px 4px 0;
+}
+
+.md-body code {
+  background: #f1e7d2;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.92em;
+  color: var(--primary);
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+}
+.md-body pre {
+  background: #2a2418;
+  color: #f5e9d0;
+  padding: 12px 14px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 10px 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.md-body pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.md-body hr {
+  border: 0;
+  border-top: 1px dashed var(--line);
+  margin: 14px 0;
+}
+
+.md-body table {
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 13px;
+  width: 100%;
+}
+.md-body th,
+.md-body td {
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  text-align: left;
+}
+.md-body th {
+  background: #f1e7d2;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.md-body a {
+  color: var(--el-shui);
+  text-decoration: underline;
+}

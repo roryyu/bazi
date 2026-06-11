@@ -14,17 +14,25 @@ import {
   Mic,
   Radio,
   Sparkles,
+  Music,
 } from "lucide-react";
 
 const projects = [
   {
+    title: "Soulmates - 数字疗愈音乐生产平台",
+    role: "2026.06 - 至今",
+    link: "https://www.soulmates.org.cn/",
+    description:
+      "通过Minimax音乐模型应用生成音乐素材，同时构建自然语言音乐编辑能力，实现工业化精准音乐生产。企业版本研发完成已上线，目前正在试用中。",
+    tags: ["Minimax", "AI音乐生成", "自然语言编辑", "B端产品"],
+  },
+  {
     title: "EduDream - AI教育产品",
-    role: "独立开发",
+    role: "2026.04 - 至今",
     link: "https://www.edudream.cn",
     description:
-      "基于 deepseek 和 doubao-embedding-text 的中小学教师课程论文 Agent，3周完成初版开发，上线2周获150+位付费用户。",
-    tags: ["DeepSeek", "AI Agent", "Prompt Engineering", "用户增长"],
-    highlight: true,
+      "RAG知识库产品，基于DeepSeek V3和doubao-embedding-text模型，实现中小学教师课程论文Agent。3周完成初版开发，上线2周获300+位付费用户。目前toB版本已研发完成，进入市场推广阶段。",
+    tags: ["DeepSeek", "RAG", "AI Agent", "Prompt Engineering", "用户增长"],
   },
 ];
 
@@ -39,9 +47,23 @@ const skills = [
 ];
 
 const community = [
-  { text: "参与多个AI线下社群技术分享，米柚club等自媒体技术讲师", icon: Sparkles },
-  { text: "录制AI Agent主题播客", link: "https://www.xiaoyuzhoufm.com/episode/69bb9bea3c625cc5ae183509", icon: Mic },
-  { text: "AI主题技术直播回放", link: "https://weixin.qq.com/sph/AZCqIJrdtZ", icon: Radio },
+  {
+    text: "参与多个AI线下社群技术分享，作为米柚club等自媒体技术讲师参与线下OpenClaw活动",
+    icon: Sparkles,
+  },
+  {
+    text: "录制AI Agent主题播客（2期）",
+    links: [
+      { label: "第1期", url: "https://www.xiaoyuzhoufm.com/episode/69bb9bea3c625cc5ae183509" },
+      { label: "第2期", url: "https://www.xiaoyuzhoufm.com/episode/69f379685390b7cc92853585" },
+    ],
+    icon: Mic,
+  },
+  {
+    text: "AI主题技术直播回放",
+    link: "https://weixin.qq.com/sph/AZCqIJrdtZ",
+    icon: Radio,
+  },
 ];
 
 export default function AIProjects() {
@@ -61,12 +83,12 @@ export default function AIProjects() {
           </div>
           <h2 className="text-4xl font-bold text-foreground">AI项目与开源贡献</h2>
           <p className="text-muted mt-3 max-w-2xl mx-auto">
-            专注于AI Agent应用开发，独立开发AI教育产品，并积极贡献开源社区
+            专注于AI Agent应用开发，独立开发AI教育及音乐产品，并积极贡献开源社区
           </p>
         </motion.div>
 
         <div className="space-y-16">
-          {projects.map((project, i) => (
+          {projects.map((project) => (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 30 }}
@@ -161,6 +183,21 @@ export default function AIProjects() {
                       <Icon size={18} />
                     </div>
                     <p className="text-sm text-muted leading-relaxed">{item.text}</p>
+                    {item.links && (
+                      <div className="flex gap-2 mt-2">
+                        {item.links.map((l) => (
+                          <a
+                            key={l.url}
+                            href={l.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-primary hover:underline"
+                          >
+                            {l.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 );
                 return item.link ? (

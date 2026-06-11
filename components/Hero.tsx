@@ -94,9 +94,15 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-muted text-lg leading-relaxed max-w-2xl"
             >
-              15年前后端研发经验，8年技术团队管理经验，覆盖电商、广告、教育、互联网、公安、5G等多个行业领域。
-              擅长从用户场景、技术架构、业务流程与商业模式等多维度解决复杂问题，推动项目高效交付。
-              当前重点关注 <span className="text-primary font-medium">AI Agent应用开发</span> 与 <span className="text-accent font-medium">AI Native工具链建设</span>。
+              15年前后端研发经验，8年技术团队管理经验，深耕企业数字化建设，覆盖电商、广告、教育、互联网、公安、5G等多个行业领域。擅长从用户场景、技术架构、业务流程与商业模式等多维度设计解决方案，并推动项目高效交付。
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="text-muted text-lg leading-relaxed max-w-2xl"
+            >
+              当前专注<span className="text-primary font-medium">AI Agent应用开发</span>与<span className="text-accent font-medium">AI Native工具链建设</span>，熟练掌握Langchain、ONNX模型Web应用、Transformers应用及AI Agent定制与二次开发。独立开发AI教育产品toC版本已上线，正在推动toB版本落地。活跃于AI开发者社区，参与线下技术分享、播客录制与直播。
             </motion.p>
 
             <motion.div

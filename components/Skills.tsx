@@ -51,6 +51,7 @@ const skillCategories = [
     skills: [
       "React",
       "Vue",
+      "Next.js",
       "Egg.js",
       "LoopBack",
       "Ant Design",
@@ -70,6 +71,7 @@ const skillCategories = [
       "PHP HHVM",
       "Java Spring",
       "Node.js",
+      "Python",
       "REST接口设计",
       "数据库设计与优化",
       "系统集成",
