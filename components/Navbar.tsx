@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 
 const navItems = [
   { label: "首页", href: "#hero" },
+  { label: "无用之用", href: "/ideas" },
   { label: "AI项目", href: "#ai-projects" },
   { label: "工作经历", href: "#experience" },
   { label: "核心技能", href: "#skills" },
