@@ -91,8 +91,7 @@ export default function IdeasPage() {
               没有商业价值<br />但有用的 AI 应用
             </h1>
             <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
-              这里收集那些不会被 VC 看上、不会有千万用户、<br />
-              但或许能让一个人的生活变得更美好的小工具。
+              美丽的小野花，也让这个世界更美丽
             </p>
           </motion.div>
         </div>
