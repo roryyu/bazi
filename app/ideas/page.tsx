@@ -91,7 +91,7 @@ export default function IdeasPage() {
               没有商业价值<br />但有用的 AI 应用
             </h1>
             <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
-              美丽的小野花，也让这个世界更美丽🌺
+              美丽的小野花，也让这个世界更美丽🌺朵朵
             </p>
           </motion.div>
         </div>
