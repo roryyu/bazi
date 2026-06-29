@@ -204,14 +204,14 @@ function Slide1({ active }: { active: boolean }) {
           AI Practice Camp
         </div>
         <h1 className="text-[#1A1A2E] text-5xl md:text-6xl font-semibold leading-[1.15] mb-10">
-          AI实战营
+          解锁企业新潜力
         </h1>
         <div className="text-[#1A1A2E]/80 text-xl md:text-2xl font-medium leading-relaxed mb-20">
-          解锁企业新潜力，用AI撬动企业增长新势能
+          用AI撬动企业增长新势能
         </div>
         <div className="text-[#1A1A2E]/70">
           <div className="text-2xl font-medium text-[#1A1A2E] mb-3">郁辰磊</div>
-          <div className="text-lg">AI 实战营 · 讲师</div>
+          <div className="text-lg">2026年7月8日</div>
         </div>
       </div>
       <div className="flex flex-col items-center justify-center gap-12 w-56">
