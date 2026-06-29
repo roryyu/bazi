@@ -224,7 +224,7 @@ function Slide1({ active }: { active: boolean }) {
   );
 }
 
-function Slide2({ active }: { active: boolean }) {
+function Slide2({ active, onImageClick }: { active: boolean; onImageClick?: (src: string) => void }) {
   return (
     <div className="w-full h-full flex flex-col bg-[#F5F2EC] px-8 md:px-16 lg:px-24 pt-12 pb-12">
       <div className="absolute top-8 right-10 text-4xl font-serif text-[#1A1A2E]/20 tracking-tight select-none">
@@ -252,7 +252,8 @@ function Slide2({ active }: { active: boolean }) {
               <img
                 src="/slide/1.jpg"
                 alt="LLM: 文字接龙游戏"
-                className="w-full h-auto object-cover"
+                className="w-full h-auto object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                onClick={() => onImageClick?.('/slide/1.jpg')}
               />
             </motion.div>
             <motion.div
@@ -264,7 +265,8 @@ function Slide2({ active }: { active: boolean }) {
               <img
                 src="/slide/2.jpg"
                 alt="Token: 翻译官"
-                className="w-full h-auto object-cover"
+                className="w-full h-auto object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                onClick={() => onImageClick?.('/slide/2.jpg')}
               />
             </motion.div>
           </div>
@@ -470,7 +472,7 @@ function Slide3({ active }: { active: boolean }) {
               className="bg-gradient-to-r from-[#D47A5C]/10 to-[#1A1A2E]/10 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-[#1A1A2E]/10 p-6"
             >
               <div className="text-[#1A1A2E] text-lg md:text-xl font-serif leading-relaxed">
-                Agent要不要自己搭，当然
+                Agent要不要自己搭?当然
                 <span className="text-[#5C7A9E] font-bold">可以等一等</span>，
                 但现在是每个人能当
                 <span className="text-[#D47A5C] font-bold">瓦特</span>的时代，
@@ -782,7 +784,7 @@ function Slide5({ active }: { active: boolean }) {
   );
 }
 
-function Slide6({ active }: { active: boolean }) {
+function Slide6({ active, onImageClick }: { active: boolean; onImageClick?: (src: string) => void }) {
   return (
     <div className="w-full h-full flex flex-col bg-[#F5F2EC] px-8 md:px-16 lg:px-24 pt-12 pb-12">
       <div className="absolute top-8 right-10 text-4xl font-serif text-[#1A1A2E]/20 tracking-tight select-none">
@@ -838,8 +840,9 @@ function Slide6({ active }: { active: boolean }) {
             <img
               src="/slide/5.png"
               alt="WorkBuddy 界面"
-              className="max-w-full h-auto object-contain"
+              className="max-w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
               style={{ maxHeight: 'calc(100vh - 200px)' }}
+              onClick={() => onImageClick?.('/slide/5.png')}
             />
           </div>
         </motion.div>
@@ -848,7 +851,7 @@ function Slide6({ active }: { active: boolean }) {
   );
 }
 
-function Slide7({ active }: { active: boolean }) {
+function Slide7({ active, onImageClick }: { active: boolean; onImageClick?: (src: string) => void }) {
   const [step, setStep] = useState(1);
 
   const steps = [
@@ -924,7 +927,7 @@ function Slide7({ active }: { active: boolean }) {
   );
 }
 
-function Slide8({ active }: { active: boolean }) {
+function Slide8({ active, onImageClick }: { active: boolean; onImageClick?: (src: string) => void }) {
   return (
     <div className="w-full h-full flex flex-col bg-[#F5F2EC] px-8 md:px-16 lg:px-24 pt-12 pb-12">
       <div className="absolute top-8 right-10 text-4xl font-serif text-[#1A1A2E]/20 tracking-tight select-none">
@@ -945,8 +948,9 @@ function Slide8({ active }: { active: boolean }) {
           <img
             src="/slide/21.png"
             alt="Workbuddy+企微CLI"
-            className="max-w-full h-auto object-contain"
+            className="max-w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
             style={{ maxHeight: 'calc(100vh - 250px)' }}
+            onClick={() => onImageClick?.('/slide/21.png')}
           />
         </motion.div>
       </div>
@@ -954,7 +958,7 @@ function Slide8({ active }: { active: boolean }) {
   );
 }
 
-function Slide9({ active }: { active: boolean }) {
+function Slide9({ active, onImageClick }: { active: boolean; onImageClick?: (src: string) => void }) {
   return (
     <div className="w-full h-full flex flex-col bg-[#F5F2EC] px-8 md:px-16 lg:px-24 pt-12 pb-12">
       <div className="absolute top-8 right-10 text-4xl font-serif text-[#1A1A2E]/20 tracking-tight select-none">
@@ -975,8 +979,9 @@ function Slide9({ active }: { active: boolean }) {
           <img
             src="/slide/22.png"
             alt="财务分析报告"
-            className="max-w-full h-auto object-contain"
+            className="max-w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
             style={{ maxHeight: 'calc(100vh - 350px)' }}
+            onClick={() => onImageClick?.('/slide/22.png')}
           />
         </motion.div>
 
@@ -998,7 +1003,7 @@ function Slide9({ active }: { active: boolean }) {
   );
 }
 
-function Slide10({ active }: { active: boolean }) {
+function Slide10({ active, onImageClick }: { active: boolean; onImageClick?: (src: string) => void }) {
   return (
     <div className="w-full h-full flex flex-col bg-[#F5F2EC] px-8 md:px-16 lg:px-24 pt-12 pb-12">
       <div className="absolute top-8 right-10 text-4xl font-serif text-[#1A1A2E]/20 tracking-tight select-none">
@@ -1041,8 +1046,9 @@ function Slide10({ active }: { active: boolean }) {
             <img
               src="/slide/23.png"
               alt="扣子+微信公众号/客服"
-              className="max-w-full h-auto object-contain"
+              className="max-w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
               style={{ maxHeight: 'calc(100vh - 300px)' }}
+              onClick={() => onImageClick?.('/slide/23.png')}
             />
           </div>
         </motion.div>
@@ -1051,7 +1057,7 @@ function Slide10({ active }: { active: boolean }) {
   );
 }
 
-function Slide11({ active }: { active: boolean }) {
+function Slide11({ active, onImageClick }: { active: boolean; onImageClick?: (src: string) => void }) {
   return (
     <div className="w-full h-full flex flex-col bg-[#F5F2EC] px-8 md:px-16 lg:px-24 pt-12 pb-12">
       <div className="absolute top-8 right-10 text-4xl font-serif text-[#1A1A2E]/20 tracking-tight select-none">
@@ -1094,8 +1100,9 @@ function Slide11({ active }: { active: boolean }) {
             <img
               src="/slide/24.png"
               alt="腾讯元器智能体"
-              className="max-w-full h-auto object-contain"
+              className="max-w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
               style={{ maxHeight: 'calc(100vh - 300px)' }}
+              onClick={() => onImageClick?.('/slide/24.png')}
             />
           </div>
         </motion.div>
@@ -1104,7 +1111,7 @@ function Slide11({ active }: { active: boolean }) {
   );
 }
 
-function Slide12({ active }: { active: boolean }) {
+function Slide12({ active, onImageClick }: { active: boolean; onImageClick?: (src: string) => void }) {
   return (
     <div className="w-full h-full flex flex-col bg-[#F5F2EC] px-8 md:px-16 lg:px-24 pt-12 pb-12">
       <div className="absolute top-8 right-10 text-4xl font-serif text-[#1A1A2E]/20 tracking-tight select-none">
@@ -1147,8 +1154,9 @@ function Slide12({ active }: { active: boolean }) {
             <img
               src="/slide/25.png"
               alt="火山ArkClaw+飞书CLI"
-              className="max-w-full h-auto object-contain"
+              className="max-w-full h-auto object-contain cursor-pointer hover:opacity-90 transition-opacity"
               style={{ maxHeight: 'calc(100vh - 300px)' }}
+              onClick={() => onImageClick?.('/slide/25.png')}
             />
           </div>
         </motion.div>
@@ -1177,7 +1185,7 @@ function Slide13({ active }: { active: boolean }) {
   ];
 
   return (
-    <div className="w-full h-full flex flex-col justify-center px-8 md:px-16 lg:px-24 bg-white">
+    <div className="w-full h-full flex flex-col justify-center px-8 md:px-16 lg:px-24 bg-[#F5F2EC]">
       <div className="absolute top-8 right-10 text-4xl font-serif text-[#1A1A2E]/20 tracking-tight select-none">
         AI
       </div>
@@ -1218,13 +1226,57 @@ function Slide13({ active }: { active: boolean }) {
   );
 }
 
+function Slide14({ active }: { active: boolean }) {
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center bg-[#F5F2EC] px-8">
+      <motion.div
+        initial={active ? { opacity: 0, y: -30 } : { opacity: 0 }}
+        animate={active ? { opacity: 1, y: 0 } : { opacity: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="text-center"
+      >
+        <h1 className="text-[#1A1A2E] text-5xl md:text-6xl lg:text-7xl font-serif tracking-tight mb-12">
+          感谢观看
+        </h1>
+      </motion.div>
+
+      <motion.div
+        initial={active ? { opacity: 0, scale: 0.8 } : { opacity: 0 }}
+        animate={active ? { opacity: 1, scale: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="flex flex-col items-center"
+      >
+        <div className="bg-white p-4 rounded-2xl shadow-lg border border-[#1A1A2E]/10">
+          <img
+            src="/slide/26.png"
+            alt="本资料地址"
+            className="w-48 h-48 md:w-56 md:h-56 object-contain"
+          />
+        </div>
+        <p className="mt-4 text-[#1A1A2E]/65 text-base md:text-lg font-serif">
+          本资料地址
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
 export default function Ai0708Page() {
   const [index, setIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const total = 13;
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const total = 14;
 
   const next = useCallback(() => setIndex((i) => (i + 1) % total), [total]);
   const prev = useCallback(() => setIndex((i) => (i - 1 + total) % total), [total]);
+
+  const handleImageClick = useCallback((src: string) => {
+    setPreviewImage(src);
+  }, []);
+
+  const closePreview = useCallback(() => {
+    setPreviewImage(null);
+  }, []);
 
   // fullscreen toggle
   const toggleFullscreen = useCallback(() => {
@@ -1243,6 +1295,12 @@ export default function Ai0708Page() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      // Close preview on Escape
+      if (e.key === "Escape") {
+        closePreview();
+        return;
+      }
+      
       if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === " ") {
         e.preventDefault();
         next();
@@ -1256,7 +1314,7 @@ export default function Ai0708Page() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [next, prev, toggleFullscreen]);
+  }, [next, prev, toggleFullscreen, closePreview]);
 
   // touch / swipe support
   const touchStart = useRef<{ x: number; y: number } | null>(null);
@@ -1277,18 +1335,19 @@ export default function Ai0708Page() {
 
   const slides = [
     <Slide1 key={0} active={index === 0} />,
-    <Slide2 key={1} active={index === 1} />,
+    <Slide2 key={1} active={index === 1} onImageClick={handleImageClick} />,
     <Slide3 key={2} active={index === 2} />,
     <Slide4 key={3} active={index === 3} />,
     <Slide5 key={4} active={index === 4} />,
-    <Slide6 key={5} active={index === 5} />,
+    <Slide6 key={5} active={index === 5} onImageClick={handleImageClick} />,
     <Slide7 key={6} active={index === 6} />,
-    <Slide8 key={7} active={index === 7} />,
-    <Slide9 key={8} active={index === 8} />,
-    <Slide10 key={9} active={index === 9} />,
-    <Slide11 key={10} active={index === 10} />,
-    <Slide12 key={11} active={index === 11} />,
+    <Slide8 key={7} active={index === 7} onImageClick={handleImageClick} />,
+    <Slide9 key={8} active={index === 8} onImageClick={handleImageClick} />,
+    <Slide10 key={9} active={index === 9} onImageClick={handleImageClick} />,
+    <Slide11 key={10} active={index === 10} onImageClick={handleImageClick} />,
+    <Slide12 key={11} active={index === 11} onImageClick={handleImageClick} />,
     <Slide13 key={12} active={index === 12} />,
+    <Slide14 key={13} active={index === 13} />,
   ];
 
   return (
@@ -1357,6 +1416,37 @@ export default function Ai0708Page() {
       <div className={`absolute bottom-6 right-8 text-xs hidden md:block z-30 ${index === 3 ? 'text-white/40' : 'text-[#1A1A2E]/40'}`}>
         ← → 切换 / 空格 / F 全屏
       </div>
+
+      {/* Image Preview Modal */}
+      <AnimatePresence>
+        {previewImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 cursor-pointer"
+            onClick={closePreview}
+          >
+            <button
+              onClick={closePreview}
+              className="absolute top-6 right-8 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center text-white text-2xl"
+            >
+              ✕
+            </button>
+            <motion.img
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              src={previewImage}
+              alt="Preview"
+              className="max-w-[90vw] max-h-[90vh] object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
