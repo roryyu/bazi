@@ -442,7 +442,7 @@ function Slide3({ active }: { active: boolean }) {
               className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-[#1A1A2E]/10 p-6"
             >
               <div className="text-[#1A1A2E] text-lg md:text-xl font-serif leading-relaxed">
-                <span className="text-[#D47A5C] font-semibold text-2xl">AI Agent</span> 是应用大模型的框架。
+                <span className="text-[#D47A5C] font-semibold text-2xl">AI Agent</span> 是应用大模型的框架。大模型是统计学，是不确定性，而人类天生爱确定性，确定想要的答案
               </div>
             </motion.div>
 
@@ -458,7 +458,7 @@ function Slide3({ active }: { active: boolean }) {
                 <span className="text-[#5C7A9E] font-semibold">Codex</span> 到
                 <span className="text-[#D47A5C] font-semibold">Harness工程</span>、
                 <span className="text-[#D47A5C] font-semibold">Loop工程</span><br/>
-                Agent的运行应满足控制论三要素<br/>
+                Agent的运行也是在实现控制论三要素<br/>
                 <span className="text-[#2EC4B6] font-semibold">信息出规律</span>，
                 <span className="text-[#E71D36] font-semibold">控制产价值</span>，
                 <span className="text-[#FF9F1C] font-semibold">反馈来验证</span>。
@@ -698,18 +698,18 @@ function Slide4({ active }: { active: boolean }) {
 function Slide5({ active }: { active: boolean }) {
   const vendors = [
     { vendor: "Google", model: "Gemini 系列: Gemini 3.5 等;\n开源 Gemma 系列", product: "Gemini App / NotebookLM / Workspace AI", codeEditor: "Antigravity", ecosystem: "Google, Gmail, Youtube" },
-    { vendor: "OpenAI", model: "GPT-5.5、GPT-5.4、o 系推理模型、\n4o 仍共存", product: "ChatGPT / openclaw", codeEditor: "Codex", ecosystem: "不清晰，早期与微软结合较深" },
-    { vendor: "Anthropic", model: "Claude 家族: Claude Opus 4.7、\nSonnet 4.x", product: "Claude.ai / Claude API", codeEditor: "Claude Code", ecosystem: "编程，通用" },
+    { vendor: "OpenAI", model: "GPT-5.6(Sol/Terra/Luna)", product: "ChatGPT Desktop / openclaw", codeEditor: "Codex", ecosystem: "不清晰，早期与微软结合较深" },
+    { vendor: "Anthropic", model: "Claude 家族: Claude Opus 4.8、\nClaude Fable5", product: "Claude.ai / Claude Desktop", codeEditor: "Claude Code", ecosystem: "编程，通用" },
     { vendor: "Meta", model: "Llama 4 (Maverick / Scout，原生多模态、大上下文) / Llama 3 系\n(3.3 / 3.2 / 3.1)", product: "Meta AI", codeEditor: "暂无官方", ecosystem: "Facebook" },
     { vendor: "X / xAI", model: "Grok", product: "Grok AI", codeEditor: "暂无官方", ecosystem: "X" },
     { vendor: "字节跳动", model: "豆包大模型 2.0: Doubao-Seed-2.0\n系列", product: "豆包 App;\n扣子 COZE、\n火山引擎模型中心, ArkClaw,\nTRAE work", codeEditor: "TRAE", ecosystem: "抖音, 飞书，视频，图像" },
-    { vendor: "阿里巴巴", model: "Qwen3 系列", product: "通义千问 Qwen App\n阿里云方舟模型\nQoderWork", codeEditor: "Qoder", ecosystem: "电商, 钉钉" },
+    { vendor: "阿里巴巴", model: "Qwen3.7 系列", product: "通义千问 Qwen App\n阿里云方舟模型\nQoderWork", codeEditor: "Qoder", ecosystem: "电商, 钉钉" },
     { vendor: "腾讯", model: "混元 (Hunyuan) 系列", product: "腾讯元宝\nWorkbuddy", codeEditor: "CodeBuddy", ecosystem: "微信, 企业微信, 公众号, 小程序" },
-    { vendor: "Kimi / 月之暗面", model: "Kimi K2.6 / K2.5", product: "Kimi App", codeEditor: "Kimi Code", ecosystem: "编程" },
-    { vendor: "MiniMax", model: "MiniMax M2.1", product: "Minimax App", codeEditor: "暂无官方", ecosystem: "不清晰" },
-    { vendor: "智谱(Zhipu)", model: "GLM-5", product: "智谱清言 (Z.ai App)", codeEditor: "Z Code", ecosystem: "科研" },
+    { vendor: "Kimi / 月之暗面", model: "Kimi K2.7", product: "Kimi App", codeEditor: "Kimi Code", ecosystem: "编程" },
+    { vendor: "MiniMax", model: "MiniMax M2.5", product: "Minimax App", codeEditor: "暂无官方", ecosystem: "不清晰" },
+    { vendor: "智谱(Zhipu)", model: "GLM-5.2", product: "智谱清言 (Z.ai App)", codeEditor: "Z Code", ecosystem: "科研" },
     { vendor: "百度", model: "文心 系列", product: "文心一言", codeEditor: "文心快码 (Comate)", ecosystem: "百度搜索" },
-    { vendor: "DeepSeek", model: "DeepSeek-V4/V3", product: "DeepSeek 官网/App/API", codeEditor: "暂无官方", ecosystem: "通用" },
+    { vendor: "DeepSeek", model: "DeepSeek-V4", product: "DeepSeek 官网/App/API", codeEditor: "暂无官方", ecosystem: "通用" },
   ];
 
   return (
@@ -1353,7 +1353,7 @@ export default function Ai0708Page() {
   return (
     <div
       className="fixed inset-0 overflow-hidden"
-      style={{ background: index === 3 ? '#1A1A2E' : '#F5F2EC' }}
+      style={{ background: '#F5F2EC' }}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
