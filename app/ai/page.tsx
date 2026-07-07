@@ -49,173 +49,176 @@ function getAnimationProgress(time: number, animDuration: number, pauseDuration:
 }
 
 function Slide1({ active }: { active: boolean }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef1 = useRef<HTMLCanvasElement>(null);
+  const canvasRef2 = useRef<HTMLCanvasElement>(null);
+  const canvasRef3 = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (!active) return;
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
     let rafId = 0;
     let running = true;
-    let time = 0;
+    let time1 = 0;
+    let time2 = 0;
+    let time3 = 0;
 
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
+    const c1 = canvasRef1.current;
+    const c2 = canvasRef2.current;
+    const c3 = canvasRef3.current;
 
-    // 五彩线条颜色
-    const colors = [
-      "rgba(255, 107, 107, 0.6)",
-      "rgba(78, 205, 196, 0.6)",
-      "rgba(255, 230, 109, 0.6)",
-      "rgba(108, 92, 231, 0.6)",
-      "rgba(255, 159, 243, 0.6)",
-      "rgba(0, 184, 148, 0.6)",
-      "rgba(9, 132, 227, 0.6)",
-      "rgba(214, 48, 49, 0.6)",
+    const spacing1 = 40;
+    const nodeRadius1 = 12;
+    const thickness1 = 6;
+    type Node3 = { x: number; y: number; z: number };
+    const latticeNodes: Node3[] = [];
+    for (let row = -1; row <= 1; row++) {
+      for (let col = -1; col <= 1; col++) {
+        latticeNodes.push({ x: col * spacing1, y: row * spacing1 - 10, z: 0 });
+      }
+    }
+    const latticeEdges = [
+      [0, 1], [1, 2], [3, 4], [4, 5], [6, 7], [7, 8],
+      [0, 3], [3, 6], [1, 4], [4, 7], [2, 5], [5, 8],
     ];
 
-    // 曲线线条类
-    class CurveLine {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      length: number;
-      color: string;
-      angle: number;
-      angleSpeed: number;
-      thickness: number;
-      curveOffset: number;  // 曲线弯曲偏移量
-      curvePhase: number;   // 曲线相位
-      curveSpeed: number;   // 曲线变化速度
+    const nodeRadius2 = 14;
+    const thickness2 = 7;
+    const lineNodes = [
+      { x: -45, y: -20, z: 0 },
+      { x: 45, y: 20, z: 0 },
+    ];
 
-      constructor(canvasWidth: number, canvasHeight: number) {
-        this.x = Math.random() * canvasWidth;
-        this.y = Math.random() * canvasHeight;
-        this.vx = (Math.random() - 0.5) * 1.5;
-        this.vy = (Math.random() - 0.5) * 1.5;
-        this.length = 200 + Math.random() * 30000;
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.angle = Math.random() * Math.PI * 2;
-        this.angleSpeed = (Math.random() - 0.5) * 0.015;
-        this.thickness = 1.5 + Math.random() * 2.5;
-        this.curveOffset = 20 + Math.random() * 40;
-        this.curvePhase = Math.random() * Math.PI * 2;
-        this.curveSpeed = 0.02 + Math.random() * 0.03;
-      }
-
-      update(canvasWidth: number, canvasHeight: number) {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.angle += this.angleSpeed;
-        this.curvePhase += this.curveSpeed;
-
-        // 边界反弹
-        if (this.x < 0 || this.x > canvasWidth) this.vx *= -1;
-        if (this.y < 0 || this.y > canvasHeight) this.vy *= -1;
-      }
-
-      draw(ctx: CanvasRenderingContext2D) {
-        const halfLen = this.length / 2;
-        const x1 = this.x + Math.cos(this.angle) * halfLen;
-        const y1 = this.y + Math.sin(this.angle) * halfLen;
-        const x2 = this.x - Math.cos(this.angle) * halfLen;
-        const y2 = this.y - Math.sin(this.angle) * halfLen;
-
-        // 计算控制点 - 动态变化的曲线偏移
-        const curveAmount = this.curveOffset * Math.sin(this.curvePhase);
-        const perpAngle = this.angle + Math.PI / 2;  // 垂直方向
-        const cpx = this.x + Math.cos(perpAngle) * curveAmount;
-        const cpy = this.y + Math.sin(perpAngle) * curveAmount;
-
-        // 绘制二次贝塞尔曲线
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.quadraticCurveTo(cpx, cpy, x2, y2);
-        ctx.strokeStyle = this.color;
-        ctx.lineWidth = this.thickness;
-        ctx.lineCap = "round";
-        ctx.stroke();
-      }
-    }
-
-    const { width, height } = canvas;
-    
-    // 创建线条
-    const lines: CurveLine[] = [];
-    for (let i = 0; i < 40; i++) {
-      lines.push(new CurveLine(width, height));
-    }
+    const nodeRadius3 = 12;
+    const size3 = 45;
+    const thickness3 = 6;
+    const squareNodes = [
+      { x: -size3, y: -size3, z: 0 },
+      { x: size3, y: -size3, z: 0 },
+      { x: size3, y: size3, z: 0 },
+      { x: -size3, y: size3, z: 0 },
+    ];
+    const squareEdges = [[0, 1], [1, 2], [2, 3], [3, 0]];
 
     function render() {
-      if (!running || !ctx) return;
+      if (!running) return;
 
-      // 半透明清除，产生拖尾效果
-      ctx.fillStyle = "rgba(222, 240, 251, 0.1)";
-      ctx.fillRect(0, 0, width, height);
-
-      // 更新并绘制所有线条
-      for (const line of lines) {
-        line.update(width, height);
-        line.draw(ctx);
-      }
-
-      // 绘制线条之间的连接（近距连接）
-      for (let i = 0; i < lines.length; i++) {
-        for (let j = i + 1; j < lines.length; j++) {
-          const dx = lines[i].x - lines[j].x;
-          const dy = lines[i].y - lines[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          
-          if (dist < 150) {
+      if (c1) {
+        const ctx = c1.getContext("2d");
+        if (ctx) {
+          ctx.clearRect(0, 0, c1.width, c1.height);
+          const rotY = getAnimationProgress(time1, 2, 3);
+          const projected = latticeNodes.map((n) => project(n.x, n.y, n.z, rotY));
+          const sorted = projected.map((p, i) => ({ p, i })).sort((a, b) => a.p.z - b.p.z);
+          const w = c1.width / 2;
+          const h = c1.height / 2;
+          for (const [i, j] of latticeEdges) {
+            const p1 = projected[i];
+            const p2 = projected[j];
             ctx.beginPath();
-            ctx.moveTo(lines[i].x, lines[i].y);
-            ctx.lineTo(lines[j].x, lines[j].y);
-            ctx.strokeStyle = `rgba(150, 150, 200, ${0.3 * (1 - dist / 150)})`;
-            ctx.lineWidth = 0.5;
+            ctx.moveTo(w + p1.x, h + p1.y);
+            ctx.lineTo(w + p2.x, h + p2.y);
+            ctx.strokeStyle = COLOR;
+            ctx.globalAlpha = 0.8;
+            ctx.lineWidth = thickness1 * ((p1.scale + p2.scale) / 2);
+            ctx.lineCap = "round";
             ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+          for (const { p } of sorted) {
+            drawSphere(ctx, w + p.x, h + p.y, nodeRadius1, p.scale);
           }
         }
       }
 
-      time += 0.016;
+      if (c2) {
+        const ctx = c2.getContext("2d");
+        if (ctx) {
+          ctx.clearRect(0, 0, c2.width, c2.height);
+          const rotY = getAnimationProgress(time2, 2, 0.5);
+          const rotatedNodes = lineNodes.map((n) => project(n.x, n.y, n.z, rotY));
+          const sorted = rotatedNodes.map((p, i) => ({ p, i })).sort((a, b) => a.p.z - b.p.z);
+          const w = c2.width / 2;
+          const h = c2.height / 2;
+          const p1 = rotatedNodes[0];
+          const p2 = rotatedNodes[1];
+          ctx.beginPath();
+          ctx.moveTo(w + p1.x, h + p1.y);
+          ctx.lineTo(w + p2.x, h + p2.y);
+          ctx.strokeStyle = COLOR;
+          ctx.globalAlpha = 0.8;
+          ctx.lineWidth = thickness2 * ((p1.scale + p2.scale) / 2);
+          ctx.lineCap = "round";
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+          for (const { p } of sorted) {
+            drawSphere(ctx, w + p.x, h + p.y, nodeRadius2, p.scale);
+          }
+        }
+      }
+
+      if (c3) {
+        const ctx = c3.getContext("2d");
+        if (ctx) {
+          ctx.clearRect(0, 0, c3.width, c3.height);
+          const rotY = getAnimationProgress(time3, 2, 2);
+          const projected = squareNodes.map((n) => project(n.x, n.y, n.z, rotY));
+          const sorted = projected.map((p, i) => ({ p, i })).sort((a, b) => a.p.z - b.p.z);
+          const w = c3.width / 2;
+          const h = c3.height / 2;
+          for (const [i, j] of squareEdges) {
+            const p1 = projected[i];
+            const p2 = projected[j];
+            ctx.beginPath();
+            ctx.moveTo(w + p1.x, h + p1.y);
+            ctx.lineTo(w + p2.x, h + p2.y);
+            ctx.strokeStyle = COLOR;
+            ctx.globalAlpha = 0.8;
+            ctx.lineWidth = thickness3 * ((p1.scale + p2.scale) / 2);
+            ctx.lineCap = "round";
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+          for (const { p } of sorted) {
+            drawSphere(ctx, w + p.x, h + p.y, nodeRadius3, p.scale);
+          }
+        }
+      }
+
+      time1 += 0.016;
+      time2 += 0.016;
+      time3 += 0.016;
       rafId = requestAnimationFrame(render);
     }
 
     rafId = requestAnimationFrame(render);
-
     return () => {
       running = false;
       cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", resize);
     };
   }, [active]);
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-12 md:p-20 bg-gradient-to-r from-[#def0fb] to-[#dde8ff] relative overflow-hidden">
-      {/* Canvas 动画层 - 在背景图片之上 */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 pointer-events-none z-10"
-        style={{ opacity: 0.02 }}
-      />
-      
-      <img src="/slide/114.png" className="w-full h-auto relative z-0" />
-      
-      <div className="absolute left-40 bottom-10 z-20">
-          <div>wifi名称：BZDQZX-FK</div>
-          <div>密码：56660617</div>
-          <div style={{padding:"10px 0"}}><img src="/slide/115.png" style={{ width: "80px" }} /></div>
-          <div>使用相机扫描，一键连接网络</div>
+    <div className="w-full h-full flex items-center justify-center p-12 md:p-20">
+      <div className="flex flex-1 flex-col justify-center pr-10 max-w-2xl">
+        <div className="text-[#1A1A2E]/70 text-2xl mb-16 leading-tight">
+          AI 实战营<br />
+          AI Practice Camp
+        </div>
+        <h1 className="text-[#1A1A2E] text-5xl md:text-6xl font-semibold leading-[1.15] mb-10">
+          解锁企业新潜力
+        </h1>
+        <div className="text-[#1A1A2E]/80 text-xl md:text-2xl font-medium leading-relaxed mb-20">
+          用AI撬动企业增长新势能
+        </div>
+        <div className="text-[#1A1A2E]/70">
+          <div className="text-2xl font-medium text-[#1A1A2E] mb-3">郁辰磊</div>
+          <div className="text-lg">2026年7月8日</div>
+        </div>
+      </div>
+      <div className="flex flex-col items-center justify-center gap-12 w-56">
+        <canvas ref={canvasRef1} width={200} height={180} className="block" />
+        <canvas ref={canvasRef2} width={200} height={120} className="block" />
+        <canvas ref={canvasRef3} width={200} height={180} className="block" />
       </div>
     </div>
   );
@@ -1241,43 +1244,18 @@ function Slide14({ active }: { active: boolean }) {
         initial={active ? { opacity: 0, scale: 0.8 } : { opacity: 0 }}
         animate={active ? { opacity: 1, scale: 1 } : { opacity: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
-        className="flex flex-col"
+        className="flex flex-col items-center"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full mt-16">
-          <div className="bg-white p-4 rounded-2xl shadow-lg border border-[#1A1A2E]/10">
-            <p className="mt-4 text-[#1A1A2E]/65 text-base md:text-lg font-serif text-center">
-                本资料地址
-            </p>
-            <img
-              src="/slide/26.png"
-              alt="本资料地址"
-              className="w-48 h-48 md:w-56 md:h-56 object-contain"
-              style={{ margin: '0 auto',display:'block' }}
-            />
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-lg border border-[#1A1A2E]/10 flex items-center gap-6">
-            <div className="flex flex-col items-center">
-              <p className="mb-4 text-[#1A1A2E]/65 text-base md:text-lg font-serif">满意度调查</p>
-              <img
-                src="/slide/116.png"
-                alt="满意度调查二维码"
-                className="w-48 h-48 md:w-56 md:h-56 object-contain"
-              />
-            </div>
-            <div className="text-left text-[#1A1A2E] font-serif">
-              <p className="text-lg font-semibold mb-3">步骤如下：</p>
-              <p className="mb-1">0、静安区</p>
-              <p className="mb-1">0、北站街道</p>
-              <p className="mb-1 text-sm text-[#1A1A2E]/70">北站街道"静邻"就业服务站</p>
-              <p className="mb-1">1、知道</p>
-              <p className="mb-1">2、知道</p>
-              <p className="mb-1">3、是</p>
-              <p className="mb-1">4、满意</p>
-              <p className="text-[#1A1A2E]/50">5、（可以不填）</p>
-            </div>
-          </div>
+        <div className="bg-white p-4 rounded-2xl shadow-lg border border-[#1A1A2E]/10">
+          <img
+            src="/slide/26.png"
+            alt="本资料地址"
+            className="w-48 h-48 md:w-56 md:h-56 object-contain"
+          />
         </div>
-
+        <p className="mt-4 text-[#1A1A2E]/65 text-base md:text-lg font-serif">
+          本资料地址
+        </p>
       </motion.div>
     </div>
   );
