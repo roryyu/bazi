@@ -458,23 +458,11 @@ function Slide3({ active }: { active: boolean }) {
                 Agent的运行也是在实现控制论三要素<br/>
                 <span className="text-[#2EC4B6] font-semibold">信息出规律</span>，
                 <span className="text-[#E71D36] font-semibold">控制产价值</span>，
-                <span className="text-[#FF9F1C] font-semibold">反馈来验证</span>。
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={active ? { opacity: 0, y: 10 } : { opacity: 0 }}
-              animate={active ? { opacity: 1, y: 0 } : { opacity: 0 }}
-              transition={{ duration: 0.4, delay: 0.6 }}
-              className="bg-gradient-to-r from-[#D47A5C]/10 to-[#1A1A2E]/10 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-[#1A1A2E]/10 p-6"
-            >
-              <div className="text-[#1A1A2E] text-lg md:text-xl font-serif leading-relaxed">
-                Agent要不要自己搭?当然
-                <span className="text-[#5C7A9E] font-bold">可以等一等</span>，
-                但现在是每个人能当
-                <span className="text-[#D47A5C] font-bold">瓦特</span>的时代，
-                你是不是愿意
-                <span className="text-[#1A1A2E] font-bold">放弃这个机会</span>。
+                <span className="text-[#FF9F1C] font-semibold">反馈来验证</span>。<br/>
+                我们以工业革命做个比喻，
+                <span className="text-[#5C7A9E] font-semibold">大模型</span>是煤的生物能转换，蒸汽膨胀的热力学定律。
+                <span className="text-[#5C7A9E] font-semibold">Agent</span>是蒸汽机，是轮轴，甚至也是火车的轮子。
+                火车的时速，货物的吨数，热能转化率就是反馈
               </div>
             </motion.div>
           </div>
@@ -606,7 +594,7 @@ function Slide4({ active, onSvgClick }: { active: boolean; onSvgClick?: () => vo
               复杂操作:
             </text>
             <text x="340" y="270" textAnchor="start" style={{ fontSize: '10px', fill: '#666', fontFamily: 'sans-serif' }}>
-              其他厂商工具MCP
+              其他厂商本地工具/远程MCP
             </text>
             <text x="340" y="285" textAnchor="start" style={{ fontSize: '10px', fill: '#666', fontFamily: 'sans-serif' }}>
               其他语言脚本python/nodejs
@@ -622,6 +610,7 @@ function Slide4({ active, onSvgClick }: { active: boolean; onSvgClick?: () => vo
               </marker>
             </defs>
           </svg>
+          <div>用户输入需求，Agent结合上下文、记忆、Skills拼接提示词一次或多次请求大模型，大模型返回Agent可执行脚本、代码、描述，AgentBash、CLI等工具完整任务。</div>
         </motion.div>
 
         {/* 右侧：表格 */}

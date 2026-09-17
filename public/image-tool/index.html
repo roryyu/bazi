@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>图片拼接工具</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+  </style>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>图片拼接</h1>
+      <p class="tip">选择2-9张图片，自动按规则拼接</p>
+    </div>
+    
+    <div class="upload-section">
+      <label class="upload-btn" id="uploadBtn">
+        <span class="upload-icon">+</span>
+        <span>选择图片</span>
+      </label>
+      <input type="file" id="fileInput" accept="image/*" multiple style="display: none;" />
+    </div>
+
+    <div class="preview-section" id="previewSection" style="display: none;">
+      <div class="thumbnails" id="thumbnails"></div>
+      <div class="actions">
+        <button class="btn" id="clearBtn">清空重选</button>
+        <button class="btn primary" id="mergeBtn">开始拼接</button>
+      </div>
+    </div>
+
+    <div class="result-section" id="resultSection" style="display: none;">
+      <p class="long-press-tip">长按图片可保存到相册</p>
+      <div class="image-container" id="imageContainer">
+        <img id="resultImage" />
+      </div>
+      <button class="btn" id="backBtn">返回重选</button>
+    </div>
+  </div>
+  <script src="./assets/main.js"></script>
+</body>
+</html>
